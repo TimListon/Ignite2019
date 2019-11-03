@@ -37,6 +37,28 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
+- task: CopyFiles@2
+  inputs:
+    Contents: |
+      **\*.dacpac
+      **\*.Commands.WebApi.zip
+      **\*.Events.WebApi.zip
+      **\*.Queries.WebApi.zip
+      **\*.UI.Web.zip
+    TargetFolder: '$(Build.AritifactStagingDirectory)'
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(Build.SourcesDirectory)\deploy'
+    Contents: '**'
+    TargetFolder: '$(Build.AritifactStagingDirectory)\deploy'
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(Build.SourcesDirectory)\src\PokerLeagueManager.Utilties\bin\Debug'
+    Contents: '**'
+    TargetFolder: '$(Build.AritifactStagingDirectory)\Utility'
+
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
